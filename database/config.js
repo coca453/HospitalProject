@@ -1,22 +1,17 @@
 const mongoose = require('mongoose');
 
-
-
 const dbConnection = async() => {
-
-
     try {
-          await  mongoose.connect(
-             process.env.DB_CNN , 
-            {   useNewUrlParser: true, 
+        await mongoose.connect(
+            process.env.DB_CNN, {
+                useNewUrlParser: true,
                 useUnifiedTopology: true,
-                useCreateIndex: true});
-            console.log('DB Online');
-        
+                useCreateIndex: true
+            });
+        console.log('DB Online');
     } catch (error) {
         console.error(error);
         throw new Error('Error a la hora de inicar la BD ver logs')
-        
     }
 }
 

@@ -4,20 +4,19 @@ const bcrypt = require('bcryptjs');
 const Usuario = require("../models/usuario");
 const { generarJWT } = require("../helpers/jws");
 
-const login = async (req, res = response) =>
-{
-    const { email, password} = req.body;
+const login = async(req, res = response) => {
+    const { email, password } = req.body;
 
 
 
 
     try {
-        
+
         const usuarioDB = await Usuario.findOne({ email });
 
         //Verificar Email
 
-        if (!usuarioDB){
+        if (!usuarioDB) {
             return res.status(404).json({
                 ok: false,
                 msg: 'Email no válida'
@@ -27,7 +26,7 @@ const login = async (req, res = response) =>
 
         const validPassword = bcrypt.compareSync(password, usuarioDB.password);
 
-        if (!validPassword){
+        if (!validPassword) {
             return res.status(405).json({
                 ok: false,
                 msg: 'Contraseña no valida'
@@ -39,21 +38,21 @@ const login = async (req, res = response) =>
         const token = await generarJWT(usuarioDB.id);
 
         res.json({
-            ok:true,
+            ok: true,
             token
         })
-        
-        
+
+
     } catch (error) {
         console.log(Error);
         res.status(500).json({
-            ok:false,
-            msg : 'Error en el login'
+            ok: false,
+            msg: 'Error en el login'
         })
     }
 }
 
 
-module.exports =  {
+module.exports = {
     login
 }

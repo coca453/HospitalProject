@@ -10,32 +10,28 @@ const { Mongoose } = require('mongoose');
 // Inicio del servidor
 const app = express();
 //lectura del body
-app.use(express.json());    
+app.use(express.json());
 // base de datos
 dbConnection();
 
-// 7zkIyjch2lvxT9Va
-// meadDB
+//Crud
+//Bases DB
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/hospitales', require('./routes/hospitales'));
+app.use('/api/medicos', require('./routes/medicos'));
 
-///
+//login
+app.use('/api/login', require('./routes/auth'));
 
-// app.get( '/api/usuarios', (req, resp) => {
-//     resp.json({
-//         ok: true,
-//         usuarios: {
-//             id: 123,
-//             nombre: 'Fernando'
-//         }
-//     })
-// });
+//busquedas
+app.use('/api/todo', require('./routes/busquedas'));
 
-app.use( '/api/usuarios', require('./routes/usuarios') );
-app.use( '/api/login', require('./routes/auth') );  
+//uploads
+app.use('/api/upload', require('./routes/uploads'));
 
 
 
 
-
-app.listen( process.env.PORT, () =>{
+app.listen(process.env.PORT, () => {
     console.log('Hola Puerto: ' + process.env.PORT);
 })
