@@ -1,3 +1,5 @@
+const path = require('path');
+const fs = require('fs');
 const { response, json } = require("express");
 
 const Medico = require('../models/medicos');
@@ -82,7 +84,34 @@ const getDocumentoColeccion = async(req, res = response) => {
     }
 }
 
+const retornaImagen = (req, res = response) => {
+    const tipo = req.params.tipo;
+    const foto = req.params.foto;
+    const pathImg = path.join(__dirname, `../uploads/${tipo}/${foto}`);
+
+    //imagen por defecto
+    if (fs.existsSync(pathImg)) {
+        res.sendFile(pathImg);
+    } else {
+        const pathImg = path.join(__dirname, `../uploads/no-img.jpg`);
+        res.sendFile(pathImg);
+    }
+
+
+
+}
+
+
+const fileUpload = () => {
+
+}
+
+
+
+
 module.exports = {
     getTodo,
-    getDocumentoColeccion
+    getDocumentoColeccion,
+    fileUpload,
+    retornaImagen
 }
